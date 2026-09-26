@@ -1,0 +1,77 @@
+{
+  "name": "ROSMAR ALEJANDRA MENDOZA CANCHICA",
+  "title": "Software Developer (Backend)",
+  "contact_information": {
+    "location": "Colombia",
+    "phone": "+57 3173820550",
+    "email": "mendozarosmar@gmail.com",
+    "linkedin": "https://linkedin.com/in/rosmar-mendoza",
+    "github": "https://github.com/rosmarmendoza"
+  },
+  "professional_summary": "Backend Software Developer with solid experience designing, developing, and optimizing microservices and RESTful APIs using Golang, Python, and Java. Proven track record at high-impact companies including MercadoLibre and leading Fintech startups. Specialized in scalable architectures, SQL database integration, and adopting AI-assisted development tools (Cursor, Claude) to elevate code quality, refactoring, and efficient software delivery.",
+  "work_experience": [
+    {
+      "company": "MERCADOLIBRE",
+      "role": "Software Developer (Backend)",
+      "period": "August 2023 - March 2026",
+      "achievements": [
+        "Backend Specialization Bootcamp in Golang (August 2023 - December 2023)",
+        "Microservices Development and Maintenance at high scale",
+        "AI-Assisted Engineering Productivity (Cursor, Claude)",
+        "API Operations, Production Debugging, and On-Call SLA Support"
+      ]
+    },
+    {
+      "company": "MO TECHNOLOGIES",
+      "role": "Backend Intern",
+      "period": "July 2022 - August 2023",
+      "achievements": [
+        "Developed RESTful APIs using FastAPI and Django",
+        "Designed and integrated relational data models in PostgreSQL",
+        "Implemented backend cloud integrations with AWS"
+      ]
+    },
+    {
+      "company": "MO TECHNOLOGIES",
+      "role": "Support L2 (Fintech)",
+      "period": "January 2022 - July 2022",
+      "achievements": [
+        "Tier-2 technical incident resolution using Jira",
+        "Production code debugging in Django and SQL query execution in PostgreSQL"
+      ]
+    },
+    {
+      "company": "SCOTIABANK GBS",
+      "role": "System Access Analyst",
+      "period": "October 2019 - October 2021",
+      "achievements": [
+        "Identity and access management with Active Directory",
+        "Automated operational reporting and dashboards with Power BI"
+      ]
+    },
+    {
+      "company": "INTEXUS",
+      "role": "IT Engineer",
+      "period": "September 2016 - October 2019",
+      "achievements": [
+        "Enterprise IT operations and service desk management"
+      ]
+    }
+  ],
+  "technical_skills": {
+    "languages": ["Golang", "Python", "Java", "SQL", ".NET"],
+    "web_and_microservices": ["FastAPI", "Django", "REST APIs", "Microservices"],
+    "databases_and_cloud": ["PostgreSQL", "MySQL", "AWS"],
+    "ai_and_productivity": ["Cursor", "Claude", "Git", "Jira"],
+    "methodologies": ["Scrum", "Agile", "CI/CD", "On-Call / SLA Operations"]
+  },
+  "education": [
+    "Computer Engineer (B.S.) - Universidad Nacional Experimental del Táchira (2019)",
+    "Certified Tech Developer - Digital House"
+  ],
+  "languages": {
+    "spanish": "Native",
+    "english": "Advanced / Professional Working Proficiency",
+    "french": "Basic"
+  }
+}

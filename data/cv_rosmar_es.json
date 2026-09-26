@@ -1,0 +1,77 @@
+{
+  "nombre": "ROSMAR ALEJANDRA MENDOZA CANCHICA",
+  "titulo": "Software Developer (Backend)",
+  "informacion_contacto": {
+    "ubicacion": "Colombia",
+    "telefono": "+57 3173820550",
+    "correo_electronico": "mendozarosmar@gmail.com",
+    "linkedin": "https://linkedin.com/in/rosmar-mendoza",
+    "github": "https://github.com/rosmarmendoza"
+  },
+  "perfil_profesional": "Desarrolladora de Software Backend con sólida experiencia en el diseño, desarrollo y optimización de microservicios y APIs RESTful utilizando Golang, Python y Java. Trayectoria destacada en empresas de alto impacto como MercadoLibre y empresas Fintech. Especialista en la implementación de arquitecturas escalables, integración de bases de datos SQL y adopción de herramientas de Inteligencia Artificial (Cursor, Claude) para maximizar la calidad del código, refactorización y entrega eficiente de software.",
+  "experiencia_laboral": [
+    {
+      "empresa": "MERCADOLIBRE",
+      "cargo": "Software Developer (Backend)",
+      "periodo": "Agosto 2023 - Marzo 2026",
+      "logros": [
+        "Bootcamp de Especialización Backend en Golang (Agosto 2023 - Diciembre 2023)",
+        "Desarrollo y Mantenimiento de Microservicios",
+        "Productividad Asistida por IA",
+        "Operaciones y Soporte de APIs"
+      ]
+    },
+    {
+      "empresa": "MO TECHNOLOGIES",
+      "cargo": "Backend Intern",
+      "periodo": "Julio 2022 - Agosto 2023",
+      "logros": [
+        "Desarrollé APIs RESTful utilizando FastAPI y Django",
+        "Diseñé e integré modelos de datos en PostgreSQL",
+        "Implementé integraciones backend con AWS"
+      ]
+    },
+    {
+      "empresa": "MO TECHNOLOGIES",
+      "cargo": "Support L2",
+      "periodo": "Enero 2022 - Julio 2022",
+      "logros": [
+        "Resolución de incidencias Nivel 2 en Jira",
+        "Depuración de código en Django y SQL en PostgreSQL"
+      ]
+    },
+    {
+      "empresa": "SCOTIABANK GBS",
+      "cargo": "System Access Analyst",
+      "periodo": "Octubre 2019 - Octubre 2021",
+      "logros": [
+        "Gestión de accesos con Active Directory",
+        "Elaboración de reportes en Power BI"
+      ]
+    },
+    {
+      "empresa": "INTEXUS",
+      "cargo": "IT Engineer",
+      "periodo": "Septiembre 2016 - Octubre 2019",
+      "logros": [
+        "Gestión de operaciones de TI y mesa de ayuda"
+      ]
+    }
+  ],
+  "habilidades_tecnicas": {
+    "lenguajes": ["Golang", "Python", "Java", "SQL", ".NET"],
+    "frameworks_web": ["FastAPI", "Django", "REST APIs", "Microservicios"],
+    "bases_de_datos_cloud": ["PostgreSQL", "MySQL", "AWS"],
+    "herramientas_ia_productividad": ["Cursor", "Claude", "Git", "Jira"],
+    "metodologias": ["Scrum", "Agile", "CI/CD", "Guardias On-Call / Soporte SLA"]
+  },
+  "educacion": [
+    "Ingeniera en Informática - Universidad Nacional Experimental del Táchira (2019)",
+    "Certified Tech Developer - Digital House"
+  ],
+  "idiomas": {
+    "espanol": "Nativo",
+    "ingles": "Avanzado",
+    "frances": "Básico"
+  }
+}
