@@ -170,11 +170,11 @@ def generate_tailored_highlights(matched: List[str], lang: str) -> List[str]:
     if lang == "es":
         bullets = []
         if is_go:
-            bullets.append("Desarrolladora Backend especializada en Golang, diseño de microservicios y APIs RESTful de alto rendimiento en MercadoLibre.")
+            bullets.append("Desarrolladora Backend Semi-Senior especializada en Golang, diseño de microservicios y APIs RESTful de alto rendimiento en MercadoLibre.")
         elif is_py:
-            bullets.append("Desarrolladora Backend con amplia experiencia en Python (FastAPI, Django) y arquitecturas en la nube (AWS, PostgreSQL).")
+            bullets.append("Desarrolladora Backend Semi-Senior con experiencia sólida en Python (FastAPI, Django) y arquitecturas en la nube (AWS, PostgreSQL).")
         else:
-            bullets.append("Ingeniera de Software Backend con experiencia en sistemas distribuidos, microservicios y arquitecturas cloud de alto impacto.")
+            bullets.append("Desarrolladora Backend Semi-Senior con experiencia en sistemas distribuidos, microservicios y arquitecturas cloud de alto impacto.")
 
         bullets.append("Pionera en productividad asistida por IA (Cursor, Claude) para refactorización ágil, generación de pruebas y aceleración de entregas.")
         bullets.append("Experiencia operativa en producción: guardias On-Call bajo SLAs estrictos, diagnóstico de incidentes L2 y observabilidad.")
@@ -182,11 +182,11 @@ def generate_tailored_highlights(matched: List[str], lang: str) -> List[str]:
     else:
         bullets = []
         if is_go:
-            bullets.append("Backend Developer specialized in Golang, microservices architecture, and high-throughput REST APIs at MercadoLibre.")
+            bullets.append("Mid-Level Backend Developer specialized in Golang, microservices architecture, and high-throughput REST APIs at MercadoLibre.")
         elif is_py:
-            bullets.append("Backend Developer experienced in Python (FastAPI, Django), PostgreSQL, and AWS cloud solutions.")
+            bullets.append("Mid-Level Backend Developer experienced in Python (FastAPI, Django), PostgreSQL, and AWS cloud solutions.")
         else:
-            bullets.append("Backend Software Engineer experienced in distributed systems, microservices, and high-impact cloud architectures.")
+            bullets.append("Mid-Level Backend Software Developer experienced in distributed systems, microservices, and high-impact cloud architectures.")
 
         bullets.append("AI-augmented development champion (Cursor, Claude) for high-velocity refactoring, code quality, and fast time-to-market.")
         bullets.append("Proven production operations: On-Call SLA support, Level 2 incident troubleshooting, and distributed systems monitoring.")
@@ -201,7 +201,7 @@ def generate_linkedin_message(matched: List[str], lang: str) -> str:
 
 Vi la oportunidad para el rol de Backend Developer y me llamó mucho la atención la propuesta del equipo. 
 
-Cuento con experiencia construyendo microservicios y APIs escalables en {tech_str}, respaldada por mi trayectoria en MercadoLibre y empresas fintech. Además, integro herramientas de IA (Cursor, Claude) en mi flujo diario para optimizar la velocidad y calidad de entrega, y tengo experiencia en guardias On-Call y resolución de incidencias en producción.
+Como desarrolladora backend Semi-Senior, cuento con experiencia construyendo microservicios y APIs escalables en {tech_str}, respaldada por mi trayectoria en MercadoLibre y empresas fintech. Además, integro herramientas de IA (Cursor, Claude) en mi flujo diario para optimizar la velocidad y calidad de entrega, y tengo experiencia en guardias On-Call y resolución de incidencias en producción.
 
 Me encantaría conocer más sobre los desafíos técnicos del equipo y compartir cómo puedo sumar valor. ¿Tendrías 10 minutos esta semana para una breve charla?
 
@@ -214,7 +214,7 @@ LinkedIn: linkedin.com/in/rosmar-mendoza | GitHub: github.com/rosmarm"""
 
 I came across the Backend Developer opening and was very impressed by the team's mission.
 
-I bring hands-on experience building scalable microservices and resilient APIs with {tech_str_en}, backed by my work at MercadoLibre and fintech environments. I also leverage AI-assisted development tools (Cursor, Claude) to drive delivery velocity and high code quality, along with production On-Call incident handling experience under strict SLAs.
+As a Mid-Level Backend Developer, I bring hands-on experience building scalable microservices and resilient APIs with {tech_str_en}, backed by my work at MercadoLibre and fintech environments. I also leverage AI-assisted development tools (Cursor, Claude) to drive delivery velocity and high code quality, along with production On-Call incident handling experience under strict SLAs.
 
 I would love to learn more about the team's engineering goals and discuss how I can contribute. Would you be open to a quick 10-minute chat this week?
 
@@ -227,7 +227,7 @@ def generate_cover_letter(matched: List[str], gaps: List[Dict], score: int, lang
     if lang == "es":
         return f"""Estimado equipo de Selección / Líder de Ingeniería,
 
-Les escribo con gran entusiasmo para presentar mi candidatura a la posición de Backend Developer. Mi trayectoria como Ingeniera en Informática y desarrolladora backend en compañías de alto impacto como MercadoLibre y Mo Technologies me permite aportar soluciones escalables, código robusto y entrega continua desde el primer día.
+Les escribo con gran entusiasmo para presentar mi candidatura a la posición de Backend Developer. Mi trayectoria como Ingeniera en Informática y desarrolladora backend Semi-Senior en compañías de alto impacto como MercadoLibre y Mo Technologies me permite aportar soluciones escalables, código robusto y entrega continua desde el primer día.
 
 Durante mi etapa en MercadoLibre, me especialicé en el desarrollo y mantenimiento de microservicios en Golang, operando APIs de alto tráfico bajo estrictos acuerdos de nivel de servicio (SLA) y participando activamente en rotaciones de soporte On-Call. Asimismo, mi experiencia previa en Mo Technologies me otorgó un profundo dominio en Python (FastAPI, Django), modelado relacional en PostgreSQL y despliegues en AWS.
 
@@ -242,7 +242,7 @@ LinkedIn: https://linkedin.com/in/rosmar-mendoza | GitHub: https://github.com/ro
     else:
         return f"""Dear Hiring Team & Engineering Leadership,
 
-I am writing to express my strong interest in the Backend Developer position. With a B.S. in Computer Engineering and proven engineering experience at high-scale tech organizations like MercadoLibre and fintech innovators like Mo Technologies, I am confident in my ability to build scalable backend architectures and deliver measurable engineering impact.
+I am writing to express my strong interest in the Backend Developer position. With a B.S. in Computer Engineering and a proven track record as a Mid-Level Backend Developer at high-scale tech organizations like MercadoLibre and fintech innovators like Mo Technologies, I am confident in my ability to build scalable backend architectures and deliver measurable engineering impact.
 
 At MercadoLibre, I specialized in architecting and maintaining high-throughput microservices in Golang, supporting mission-critical APIs under strict SLAs, and executing On-Call production rotations. Previously at Mo Technologies, I engineered RESTful APIs with Python (FastAPI and Django), designed robust PostgreSQL data models, and deployed cloud integrations across AWS.
 

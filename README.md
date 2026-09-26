@@ -99,7 +99,7 @@ You can load the master prompt into your preferred AI tool:
    - **Claude Projects**: Add to *Project Knowledge* & *Custom Instructions*.
    - **Cursor / Copilot**: Add as an agent rule or context document.
 3. Test with queries like:
-   - *"Rous, evaluate this Senior Go Developer opportunity: [paste JD]"*
+   - *"Rous, evaluate this Mid-Level / Semi-Senior Go Developer opportunity: [paste JD]"*
    - *"Rous, ayúdame a preparar una respuesta STAR para una pregunta sobre cómo manejo incidencias en producción basándome en MercadoLibre."*
 
 ---
@@ -107,7 +107,8 @@ You can load the master prompt into your preferred AI tool:
 ## 🛠️ Ground Truth Profile Summary
 
 - **Candidate**: Rosmar Alejandra Mendoza Canchica
-- **Primary Roles**: Backend Software Developer | Golang & Python Engineer | Microservices Specialist
+- **Seniority**: **Semi-Senior (SSR / Mid-Level)** (~3.5 years backend experience)
+- **Primary Roles**: Semi-Senior Backend Software Developer | Golang & Python Engineer | Microservices Specialist
 - **Core Companies**:
   - **MercadoLibre** (*Aug 2023 – Mar 2026*): Backend Developer (Golang microservices, high-traffic APIs, On-call SLA support, AI productivity).
   - **Mo Technologies** (*2022 – 2023*): Backend Intern & L2 Support (Python, FastAPI, Django, PostgreSQL, AWS).

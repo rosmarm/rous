@@ -54,7 +54,7 @@ HTML_PAGE = """<!DOCTYPE html>
                     <h1 class="text-lg font-bold text-slate-900 leading-tight">
                         Rous <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">AI Career Agent</span>
                     </h1>
-                    <p class="text-xs text-slate-500" id="ui-subtitle">Rosmar Mendoza &bull; Backend Engineer (Golang &bull; Python)</p>
+                    <p class="text-xs text-slate-500" id="ui-subtitle">Rosmar Mendoza &bull; Desarrolladora Backend Semi-Senior (Golang &bull; Python)</p>
                 </div>
             </div>
             
@@ -276,33 +276,33 @@ HTML_PAGE = """<!DOCTYPE html>
         let lastAnalysis = null;
 
         const SAMPLE_JDS = {
-            es: `Senior Golang Backend Engineer
-Buscamos un Ingeniero Backend apasionado con experiencia sólida en Golang para nuestro equipo de ingeniería.
+            es: `Golang Backend Developer (Semi-Senior / SSR)
+Buscamos un Desarrollador Backend Semi-Senior con experiencia en Golang para nuestro equipo de microservicios.
 Requisitos:
-- 3+ años de experiencia construyendo microservicios y APIs RESTful de alto rendimiento en Golang.
-- Dominio de bases de datos relacionales (PostgreSQL, MySQL) y optimización de consultas SQL.
+- 2+ a 4 años de experiencia construyendo microservicios y APIs RESTful de alto rendimiento en Golang.
+- Dominio de bases de datos relacionales (PostgreSQL, MySQL) y consultas SQL.
 - Experiencia con plataformas cloud (AWS), contenedores Docker y despliegues CI/CD.
 - Experiencia en soporte a producción, guardias On-Call y cumplimiento estricto de SLAs.
-- Deseable: Conocimiento en Kubernetes (K8s) o sistemas de mensajería asíncrona como Kafka.`,
-            en: `Senior Golang Backend Engineer
-We are seeking an experienced Backend Engineer with strong Golang expertise to join our engineering team.
+- Deseable: Nociones de Kubernetes (K8s) o sistemas de mensajería asíncrona como Kafka.`,
+            en: `Golang Backend Developer (Mid-Level / Semi-Senior)
+We are seeking a Mid-Level Backend Developer with hands-on Golang expertise to join our engineering team.
 Requirements:
-- 3+ years building high-throughput microservices and RESTful APIs in Golang.
+- 2+ to 4 years building high-throughput microservices and RESTful APIs in Golang.
 - Deep familiarity with relational databases (PostgreSQL, MySQL) and SQL query optimization.
 - Solid background in cloud architectures (AWS), Docker containerization, and CI/CD pipelines.
 - Experience managing production incidents, On-Call support rotations, and SLA compliance.
-- Nice to have: Knowledge of Kubernetes (K8s) or message streaming (Kafka / RabbitMQ).`
+- Nice to have: Familiarity with Kubernetes (K8s) or message streaming (Kafka / RabbitMQ).`
         };
 
         const I18N = {
             es: {
-                subtitle: "Rosmar Mendoza • Backend Engineer (Golang • Python)",
+                subtitle: "Rosmar Mendoza • Desarrolladora Backend Semi-Senior (Golang • Python)",
                 tab_match: "Evaluador de Vacantes",
                 tab_pitch: "Materiales de Postulación",
                 tab_star: "Simulador STAR (Entrevistas)",
                 tab_cv: "Perfil & CV Base",
                 input_title: "Pegar Oferta de Empleo (Job Description)",
-                btn_sample: "Cargar ejemplo Golang / MercadoLibre",
+                btn_sample: "Cargar ejemplo Golang / MercadoLibre (SSR)",
                 input_placeholder: "Pega aquí los requisitos, stack tecnológico y responsabilidades de la oferta...",
                 btn_analyze: "Analizar Compatibilidad con Rous",
                 placeholder_title: "Ninguna vacante analizada aún",
@@ -330,13 +330,13 @@ Requirements:
                 cv_lang_title: "🌐 Idiomas"
             },
             en: {
-                subtitle: "Rosmar Mendoza • Backend Engineer (Golang • Python)",
+                subtitle: "Rosmar Mendoza • Mid-Level Backend Developer (Golang • Python)",
                 tab_match: "Job Fit Evaluator",
                 tab_pitch: "Application Materials",
                 tab_star: "STAR Interview Prep",
                 tab_cv: "Profile & CV",
                 input_title: "Paste Job Description",
-                btn_sample: "Load Golang / Microservices Sample",
+                btn_sample: "Load Golang / Microservices Sample (Mid-Level)",
                 input_placeholder: "Paste job requirements, tech stack, and responsibilities here...",
                 btn_analyze: "Analyze Job Fit with Rous",
                 placeholder_title: "No job analyzed yet",

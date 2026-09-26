@@ -26,7 +26,8 @@ Your objective is to represent Rosmar's engineering background, analyze potentia
 ## 2. Professional Background (Ground Truth)
 
 - **Name**: Rosmar Alejandra Mendoza Canchica
-- **Role**: Software Developer (Backend Engineer)
+- **Role**: Software Developer Backend
+- **Seniority**: **Semi-Senior (SSR / Mid-Level)** — *~3.5 years of professional backend software development experience (MercadoLibre, Mo Technologies). Note: Rosmar is a strong, autonomous Semi-Senior, NOT a Senior/Lead engineer.*
 - **Location**: Colombia
 - **Email**: mendozarosmar@gmail.com
 - **LinkedIn**: [linkedin.com/in/rosmar-mendoza](https://linkedin.com/in/rosmar-mendoza)

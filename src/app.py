@@ -72,7 +72,7 @@ with st.sidebar:
 
     st.markdown("### 👤 " + ("Candidata" if lang == "es" else "Candidate"))
     st.markdown("**Rosmar Alejandra Mendoza**")
-    st.caption("Backend Software Developer (Golang & Python)")
+    st.caption("Desarrolladora Backend Semi-Senior (Golang & Python)" if lang == "es" else "Mid-Level Backend Developer (Golang & Python)")
     st.markdown("📍 Colombia | ✉️ [mendozarosmar@gmail.com](mailto:mendozarosmar@gmail.com)")
     st.markdown("🔗 [LinkedIn](https://linkedin.com/in/rosmar-mendoza) | 🐙 [GitHub](https://github.com/rosmarm)")
 
@@ -110,22 +110,21 @@ tab_match, tab_pitch, tab_star, tab_cv = st.tabs(tab_names)
 SAMPLE_JDS = {
     "es": {
         "Personalizada (Escribe o pega la tuya)": "",
-        "Senior Golang Backend Engineer (MercadoLibre / Cloud)": """Buscamos un Senior Golang Backend Engineer para nuestro equipo de microservicios de alto tráfico.
+        "Golang Backend Developer (Semi-Senior / SSR)": """Buscamos un Desarrollador Backend Semi-Senior con experiencia en Golang para nuestro equipo de microservicios.
 Requisitos:
-- 3+ años de experiencia sólida en Golang.
+- 2+ a 4 años de experiencia sólida en Golang.
 - Diseño y desarrollo de microservicios y APIs RESTful de alto rendimiento.
 - Bases de datos relacionales (PostgreSQL / MySQL) y optimización de consultas SQL.
 - Experiencia en plataformas cloud (AWS) y contenedores Docker.
 - Gestión de incidentes en producción, observabilidad y guardias On-Call bajo SLAs.
-- Deseable: Kubernetes o mensajería con Kafka."""
+- Deseable: Nociones de Kubernetes o mensajería con Kafka."""
     },
     "en": {
         "Custom (Write or paste your own)": "",
-        "Senior Golang Backend Engineer (Microservices & Cloud)": """We are looking for a Senior Golang Backend Engineer to join our high-scale engineering team. 
+        "Golang Backend Developer (Mid-Level / Semi-Senior)": """We are seeking a Mid-Level Backend Developer with hands-on Golang expertise to join our engineering team. 
 Requirements:
-- 3+ years of software development experience with Golang (Go).
-- Strong experience with microservices architecture and high-throughput REST APIs.
-- Experience with relational databases (PostgreSQL / MySQL) and SQL query optimization.
+- 2+ to 4 years building high-throughput microservices and RESTful APIs in Golang.
+- Strong experience with relational databases (PostgreSQL / MySQL) and SQL query optimization.
 - Familiarity with cloud platforms (AWS), containerization with Docker, and CI/CD pipelines.
 - Experience handling production incidents, monitoring, and On-Call rotations.
 - Familiarity with Kubernetes (K8s) or message queues (Kafka) is a plus."""
