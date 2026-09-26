@@ -2,7 +2,7 @@
 
 > **Rous** is a bilingual AI Career Agent and Technical Advocate designed to consult, analyze, and strategically position the professional profile of **Rosmar Mendoza (Backend Software Developer)** for international and Latin American engineering roles.
 
-[![GitHub](https://img.shields.io/badge/GitHub-rosmarmendoza-black?logo=github)](https://github.com/rosmarmendoza)
+[![GitHub](https://img.shields.io/badge/GitHub-rosmarm%2Frous-black?logo=github)](https://github.com/rosmarm/rous)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-rosmar--mendoza-blue?logo=linkedin)](https://linkedin.com/in/rosmar-mendoza)
 [![Profile](https://img.shields.io/badge/Focus-Backend%20Engineer%20(Golang%20%2F%20Python)-brightgreen)](#)
 [![Languages](https://img.shields.io/badge/Languages-Spanish%20%7C%20English-orange)](#)
@@ -102,21 +102,16 @@ You can load the master prompt into your preferred AI tool:
 
 ## 🚢 Publishing to GitHub
 
-To push this repository to your personal GitHub account ([github.com/rosmarmendoza](https://github.com/rosmarmendoza)):
+To push updates to your personal GitHub repository ([github.com/rosmarm/rous](https://github.com/rosmarm/rous)):
 
-1. Create a new empty repository on GitHub named `rous-agent` (or `rous-career-agent`).
-2. Run the following commands:
 ```bash
 cd rous-agent
-git init
 git add .
-git commit -m "feat: initial commit for Rous AI Career Agent"
-git branch -M main
-git remote add origin https://github.com/rosmarmendoza/rous-agent.git
-git push -u origin main
+git commit -m "feat: updates for Rous AI Agent"
+git push origin main
 ```
 
 ---
 
 ## 📄 License
-MIT License. Created by [Rosmar Mendoza](https://github.com/rosmarmendoza).
+MIT License. Created by [Rosmar Mendoza](https://github.com/rosmarm).
