@@ -26,7 +26,7 @@ When applying for engineering opportunities, tailoring your profile, evaluating 
 ```text
 rous-agent/
 ├── README.md                     # Comprehensive project documentation
-├── requirements.txt              # Optional dependencies for LLM integration
+├── requirements.txt              # Project dependencies (Streamlit, etc.)
 ├── .env.example                  # Environment configuration template
 ├── .gitignore                    # Prevents leaking sensitive files or tokens
 ├── data/
@@ -37,19 +37,35 @@ rous-agent/
 │   ├── job_match_prompt.md       # Template for analyzing Job Descriptions
 │   └── interview_prep_prompt.md  # Template for STAR interview preparation
 └── src/
-    └── agent.py                  # Standalone CLI tool to query profile & run evaluations
+    ├── app.py                    # Streamlit Web Application (rich dashboard)
+    ├── web_ui.py                 # Zero-dependency local web dashboard (http.server)
+    ├── analyzer.py               # Core matching, skill taxonomy, and outreach engine
+    └── agent.py                  # Unified CLI & launcher tool
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Using Rous as a CLI Tool
+### 1. Launch the Visual Web Dashboard 🌐
 
-Clone or navigate to the directory:
+You can start the web interface immediately with **zero extra installation** using Python's built-in server:
+
 ```bash
 cd rous-agent
+python3 src/agent.py --web
 ```
+*(Automatically opens `http://127.0.0.1:8501` in your default browser).*
+
+Or, if you prefer running via **Streamlit**:
+```bash
+pip install -r requirements.txt
+streamlit run src/app.py
+```
+
+---
+
+### 2. Using Rous as a CLI Tool
 
 Check profile summary:
 ```bash

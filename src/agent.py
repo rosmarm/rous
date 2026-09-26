@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Rous - AI Career Agent for Rosmar Mendoza
-CLI tool to query CV data, evaluate job descriptions, and prepare interview answers.
+CLI tool & launcher to query CV data, evaluate job descriptions, and launch web dashboard.
 """
 
 import os
@@ -13,6 +13,10 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 PROMPTS_DIR = BASE_DIR / "prompts"
+SRC_DIR = BASE_DIR / "src"
+
+sys.path.insert(0, str(SRC_DIR))
+from analyzer import analyze_job_description
 
 def load_profile(lang="es"):
     filename = "cv_rosmar_es.json" if lang == "es" else "cv_rosmar_en.json"
@@ -29,49 +33,40 @@ def load_system_prompt():
             return f.read()
     return ""
 
-def quick_evaluate_job(jd_text: str, profile: dict) -> dict:
-    """
-    Offline heuristic analyzer for quick evaluation without requiring an API key.
-    """
-    skills = profile.get("habilidades_tecnicas", {})
-    all_skills = []
-    for cat in skills.values():
-        if isinstance(cat, list):
-            all_skills.extend(cat)
-
-    jd_lower = jd_text.lower()
-    matched = [s for s in all_skills if s.lower() in jd_lower]
-    
-    score = min(100, int((len(matched) / max(1, len(all_skills[:10]))) * 85) + 15) if matched else 30
-    
-    return {
-        "estimated_match_score": f"{score}%",
-        "matched_skills": matched,
-        "recommended_focus": "Golang / Microservices / AWS" if "golang" in jd_lower or "microservice" in jd_lower else "Python / APIs / Cloud"
-    }
-
 def print_profile_summary(profile: dict):
-    print("=" * 60)
-    print(f"  ROUS - Career Agent for {profile.get('nombre', profile.get('name'))}")
+    print("=" * 65)
+    print(f"  🤖 ROUS - Career Agent for {profile.get('nombre', profile.get('name'))}")
     print(f"  Title: {profile.get('titulo', profile.get('title'))}")
     print(f"  Email: {profile.get('informacion_contacto', {}).get('correo_electronico', profile.get('contact_information', {}).get('email'))}")
-    print("=" * 60)
+    print("=" * 65)
     print("\n[Work Experience]")
     for exp in profile.get("experiencia_laboral", profile.get("work_experience", [])):
         company = exp.get("empresa", exp.get("company"))
         role = exp.get("cargo", exp.get("role"))
         period = exp.get("periodo", exp.get("period"))
         print(f" • {role} @ {company} ({period})")
-    print("=" * 60)
+    
+    print("\n[Technical Skills]")
+    skills = profile.get("habilidades_tecnicas", profile.get("technical_skills", {}))
+    for cat, items in skills.items():
+        if isinstance(items, list):
+            print(f" • {cat.replace('_', ' ').title()}: {', '.join(items)}")
+    print("=" * 65)
 
 def main():
     parser = argparse.ArgumentParser(description="Rous - AI Career Agent for Rosmar Mendoza")
+    parser.add_argument("--web", action="store_true", help="Launch the local Web Dashboard in your browser")
     parser.add_argument("--lang", choices=["es", "en"], default="es", help="Preferred language (es/en)")
     parser.add_argument("--info", action="store_true", help="Display Rosmar's profile summary")
     parser.add_argument("--evaluate", type=str, help="Path to text file containing a Job Description to evaluate")
     parser.add_argument("--prompt", action="store_true", help="Print the full System Prompt for Rous")
 
     args = parser.parse_args()
+
+    if args.web:
+        from web_ui import run_server
+        run_server(8501)
+        return
 
     if args.prompt:
         print(load_system_prompt())
@@ -86,20 +81,35 @@ def main():
             sys.exit(1)
         with open(jd_path, "r", encoding="utf-8") as f:
             jd_text = f.read()
-        res = quick_evaluate_job(jd_text, profile)
-        print("\n--- Heuristic Job Matching Result ---")
-        print(f"Estimated Match Score: {res['estimated_match_score']}")
-        print(f"Matched Skills: {', '.join(res['matched_skills']) if res['matched_skills'] else 'None directly identified'}")
-        print(f"Strategic Focus: {res['recommended_focus']}")
-        print("\nTip: Pass this Job Description along with prompts/job_match_prompt.md to ChatGPT or Claude for full LLM analysis.")
+        res = analyze_job_description(jd_text, profile, lang=args.lang)
+        
+        print("\n" + "=" * 65)
+        print(f"  🎯 ROUS JOB MATCH ANALYSIS: {res['score']}% ({res['match_tier']})")
+        print("=" * 65)
+        print(f"\n[Matched Skills]:\n • {', '.join(res['matched_skills']) if res['matched_skills'] else 'None'}")
+        
+        if res.get("gaps_with_mitigation"):
+            print("\n[Mitigation Strategies for Gaps]:")
+            for gap in res["gaps_with_mitigation"]:
+                print(f" • {gap['technology']}: {gap['mitigation']}")
+
+        print("\n[Key Strategic Highlights]:")
+        for h in res["key_highlights"]:
+            print(f" • {h}")
+
+        print("\n[Generated LinkedIn Message]:")
+        print("-" * 50)
+        print(res["generated_materials"]["linkedin_pitch"])
+        print("-" * 50)
         return
 
     # Default action
     print_profile_summary(profile)
-    print("\nUsage:")
-    print("  python3 src/agent.py --info")
-    print("  python3 src/agent.py --prompt")
-    print("  python3 src/agent.py --evaluate path/to/job_description.txt")
+    print("\nComandos útiles:")
+    print("  python3 src/agent.py --web          # 🌐 Abre la interfaz Web visual en tu navegador")
+    print("  python3 src/agent.py --info         # 👤 Muestra el resumen del perfil")
+    print("  python3 src/agent.py --evaluate jd.txt # 🎯 Evalúa una vacante desde la terminal")
+    print("  python3 src/agent.py --prompt       # 📋 Imprime el System Prompt maestro")
 
 if __name__ == "__main__":
     main()
