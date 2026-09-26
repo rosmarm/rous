@@ -51,6 +51,25 @@ MITIGATION_STRATEGIES = {
     "terraform": "Experiencia con servicios cloud de AWS y despliegues de infraestructura moderna."
 }
 
+MITIGATION_STRATEGIES_EN = {
+    "kubernetes": "While the posting mentions Kubernetes/K8s, Rosmar brings extensive hands-on experience with Docker containerization and production microservices at MercadoLibre, ensuring an immediate transition to K8s orchestration.",
+    "k8s": "Hands-on experience with Docker containers and distributed microservices at MercadoLibre scale allows for a frictionless ramp-up with Kubernetes clusters.",
+    "kafka": "Proven background architecting microservices and high-throughput, low-latency APIs at MercadoLibre, making message-driven architecture in Kafka or RabbitMQ a natural extension.",
+    "redis": "Deep experience optimizing backend APIs and relational databases (PostgreSQL/MySQL), with direct command of in-memory caching strategies and latency reduction.",
+    "nosql": "Extensive track record in relational schema design and query tuning in PostgreSQL, smoothly adaptable to document/NoSQL stores like DynamoDB or MongoDB.",
+    "graphql": "Strong expertise in RESTful API contract modeling, making GraphQL schema design, resolvers, and query optimization effortless to adopt.",
+    "terraform": "Hands-on background with AWS cloud infrastructure integrations and automated CI/CD deployment pipelines."
+}
+
+SKILL_NAMES_EN = {
+    "Microservicios": "Microservices",
+    "Concurrencia / Alta Concurrencia": "High Concurrency & Throughput",
+    "Clean Architecture / Patrones": "Clean Architecture & Design Patterns",
+    "On-Call & Soporte SLA": "On-Call & SLA Operations",
+    "Jira / Gestión": "Jira & Agile Management",
+    "Unit Testing": "Unit Testing & QA"
+}
+
 def analyze_job_description(jd_text: str, profile: dict, lang: str = "es") -> Dict[str, Any]:
     """
     Evaluates a Job Description against Rosmar's profile.
@@ -86,9 +105,10 @@ def analyze_job_description(jd_text: str, profile: dict, lang: str = "es") -> Di
     for tech, mit_text in MITIGATION_STRATEGIES.items():
         pattern = r'(?:\b|\s)' + re.escape(tech) + r'(?:\b|\s)'
         if re.search(pattern, jd_clean) and tech not in [s.lower() for s in all_matched]:
+            mit_str = mit_text if lang == "es" else MITIGATION_STRATEGIES_EN.get(tech, f"Strong foundation in Docker & microservices at MercadoLibre enables rapid adoption of {tech.upper()}.")
             detected_gaps.append({
                 "technology": tech.upper(),
-                "mitigation": mit_text if lang == "es" else f"Strong foundation in Docker & microservices at MercadoLibre enables rapid adoption of {tech.upper()}."
+                "mitigation": mit_str
             })
 
     # Scoring algorithm
@@ -125,13 +145,13 @@ def analyze_job_description(jd_text: str, profile: dict, lang: str = "es") -> Di
     # Generated Outreach Materials
     cover_letter = generate_cover_letter(all_matched, detected_gaps, final_score, lang)
     linkedin_pitch = generate_linkedin_message(all_matched, lang)
-    star_prep = generate_star_scenarios(all_matched, lang)
+    display_matched = [SKILL_NAMES_EN.get(s, s) for s in list(set(all_matched))] if lang == "en" else list(set(all_matched))
 
     return {
         "score": final_score,
         "match_tier": match_tier,
         "color": color,
-        "matched_skills": list(set(all_matched)),
+        "matched_skills": display_matched,
         "matched_by_category": matched_by_cat,
         "gaps_with_mitigation": detected_gaps,
         "key_highlights": highlights,

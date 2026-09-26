@@ -2,6 +2,7 @@
 """
 Zero-dependency Web UI Server for Rous - AI Career Agent
 Runs a local, interactive web dashboard using Python's standard library.
+Includes full instant bilingual switching (Spanish / English).
 """
 
 import sys
@@ -50,23 +51,29 @@ HTML_PAGE = """<!DOCTYPE html>
                     🤖
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Rous <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">AI Career Agent</span></h1>
-                    <p class="text-xs text-slate-500">Rosmar Mendoza &bull; Backend Engineer (Golang &bull; Python)</p>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">
+                        Rous <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 ml-1">AI Career Agent</span>
+                    </h1>
+                    <p class="text-xs text-slate-500" id="ui-subtitle">Rosmar Mendoza &bull; Backend Engineer (Golang &bull; Python)</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-4">
-                <!-- Language Toggle -->
-                <select id="langSelect" onchange="toggleLang()" class="text-xs font-medium bg-slate-100 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700">
-                    <option value="es" selected>🇪🇸 Español</option>
-                    <option value="en">🇺🇸 English</option>
-                </select>
+                <!-- Language Selector -->
+                <div class="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                    <button onclick="changeLang('es')" id="btn-lang-es" class="text-xs font-bold px-2.5 py-1 rounded-lg transition bg-white text-indigo-700 shadow-sm">
+                        🇪🇸 Español
+                    </button>
+                    <button onclick="changeLang('en')" id="btn-lang-en" class="text-xs font-medium px-2.5 py-1 rounded-lg transition text-slate-600 hover:text-slate-900">
+                        🇺🇸 English
+                    </button>
+                </div>
 
                 <!-- Profile Links -->
-                <a href="https://linkedin.com/in/rosmar-mendoza" target="_blank" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                <a href="https://linkedin.com/in/rosmar-mendoza" target="_blank" class="hidden sm:flex text-xs font-semibold text-blue-600 hover:text-blue-800 items-center gap-1">
                     LinkedIn &rarr;
                 </a>
-                <a href="https://github.com/rosmarm" target="_blank" class="text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1">
+                <a href="https://github.com/rosmarm" target="_blank" class="hidden sm:flex text-xs font-semibold text-slate-700 hover:text-slate-900 items-center gap-1">
                     GitHub &rarr;
                 </a>
             </div>
@@ -99,7 +106,7 @@ HTML_PAGE = """<!DOCTYPE html>
                 <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="text-base font-bold text-slate-900" id="lbl-input-title">Pegar Oferta de Empleo (Job Description)</h2>
-                        <button onclick="loadSampleJD()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md transition">
+                        <button onclick="loadSampleJD()" id="btn-load-sample" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md transition">
                             Cargar ejemplo Golang / MercadoLibre
                         </button>
                     </div>
@@ -112,7 +119,7 @@ HTML_PAGE = """<!DOCTYPE html>
 
                 <!-- Right: Results Card -->
                 <div class="lg:col-span-6 flex flex-col space-y-6">
-                    <!-- Score Banner -->
+                    <!-- Score Banner Placeholder -->
                     <div id="resultPlaceholder" class="bg-white p-8 rounded-2xl border border-dashed border-slate-300 flex flex-col items-center justify-center text-center h-full min-h-[350px]">
                         <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-3xl mb-4">
                             📊
@@ -126,7 +133,7 @@ HTML_PAGE = """<!DOCTYPE html>
                         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Score de Compatibilidad</span>
+                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" id="lbl-score-title">Score de Compatibilidad</span>
                                     <div class="text-4xl font-extrabold text-indigo-600 mt-1" id="resScore">--%</div>
                                 </div>
                                 <div id="resTierBadge" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-200">
@@ -174,14 +181,14 @@ HTML_PAGE = """<!DOCTYPE html>
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2" id="lbl-li-title">
                                 💬 Mensaje Directo para Reclutador (LinkedIn)
                             </h3>
-                            <button onclick="copyToClipboard('txtLinkedIn')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-1 rounded-md transition">
-                                📋 Copiar
+                            <button onclick="copyToClipboard('txtLinkedIn')" class="btn-copy text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-1 rounded-md transition">
+                                📋 <span class="lbl-copy-btn">Copiar</span>
                             </button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3">Mensaje conciso, cordial y de alto impacto para enviar junto a la solicitud de conexión.</p>
+                        <p class="text-xs text-slate-500 mb-3" id="lbl-li-sub">Mensaje conciso, cordial y de alto impacto para enviar junto a la solicitud de conexión.</p>
                         <textarea id="txtLinkedIn" rows="9" class="w-full text-xs p-3.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-slate-700 resize-none leading-relaxed"></textarea>
                     </div>
                 </div>
@@ -190,14 +197,14 @@ HTML_PAGE = """<!DOCTYPE html>
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2" id="lbl-cl-title">
                                 📝 Carta de Presentación (Cover Letter ATS)
                             </h3>
-                            <button onclick="copyToClipboard('txtCoverLetter')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-1 rounded-md transition">
-                                📋 Copiar
+                            <button onclick="copyToClipboard('txtCoverLetter')" class="btn-copy text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-1 rounded-md transition">
+                                📋 <span class="lbl-copy-btn">Copiar</span>
                             </button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3">Redactada con énfasis en escalabilidad, experiencia en MercadoLibre y metodologías modernas.</p>
+                        <p class="text-xs text-slate-500 mb-3" id="lbl-cl-sub">Redactada con énfasis en escalabilidad, experiencia en MercadoLibre y metodologías modernas.</p>
                         <textarea id="txtCoverLetter" rows="14" class="w-full text-xs p-3.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-slate-700 resize-none leading-relaxed"></textarea>
                     </div>
                 </div>
@@ -207,8 +214,8 @@ HTML_PAGE = """<!DOCTYPE html>
         <!-- TAB 3: STAR INTERVIEW PREP -->
         <section id="tab-star" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6">
-                <h3 class="text-base font-bold text-slate-900 mb-1">🎙️ Respuestas Estructuradas en Formato STAR</h3>
-                <p class="text-xs text-slate-500">
+                <h3 class="text-base font-bold text-slate-900 mb-1" id="lbl-star-header">🎙️ Respuestas Estructuradas en Formato STAR</h3>
+                <p class="text-xs text-slate-500" id="lbl-star-sub">
                     Estructura: <strong>Situación</strong> &rarr; <strong>Tarea</strong> &rarr; <strong>Acción</strong> &rarr; <strong>Resultado</strong>, extraídas de la trayectoria técnica de Rosmar.
                 </p>
             </div>
@@ -221,7 +228,7 @@ HTML_PAGE = """<!DOCTYPE html>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Left: Work Experience -->
                 <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-base font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <h3 class="text-base font-bold text-slate-900 mb-6 flex items-center gap-2" id="lbl-cv-exp-title">
                         💼 Trayectoria Laboral
                     </h3>
                     <div id="cvExperienceList" class="space-y-6 relative border-l-2 border-indigo-100 ml-3 pl-6"></div>
@@ -231,7 +238,7 @@ HTML_PAGE = """<!DOCTYPE html>
                 <div class="lg:col-span-5 space-y-6">
                     <!-- Skills -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2" id="lbl-cv-skills-title">
                             🛠️ Stack Tecnológico
                         </h3>
                         <div id="cvSkillsContainer" class="space-y-4 text-xs"></div>
@@ -239,7 +246,7 @@ HTML_PAGE = """<!DOCTYPE html>
 
                     <!-- Education -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2" id="lbl-cv-edu-title">
                             🎓 Educación &amp; Certificaciones
                         </h3>
                         <ul id="cvEducationList" class="space-y-2 text-xs text-slate-700"></ul>
@@ -247,7 +254,7 @@ HTML_PAGE = """<!DOCTYPE html>
 
                     <!-- Languages -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2" id="lbl-cv-lang-title">
                             🌐 Idiomas
                         </h3>
                         <ul id="cvLangList" class="space-y-1.5 text-xs text-slate-700"></ul>
@@ -259,30 +266,164 @@ HTML_PAGE = """<!DOCTYPE html>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
-        Rous &bull; AI Career Agent &bull; Diseñado para Rosmar Mendoza &bull; Conectado a GitHub: <a href="https://github.com/rosmarm/rous" class="text-indigo-600 underline">rosmarm/rous</a>
+        Rous &bull; AI Career Agent &bull; Rosmar Mendoza &bull; GitHub: <a href="https://github.com/rosmarm/rous" class="text-indigo-600 underline">rosmarm/rous</a>
     </footer>
 
-    <!-- App JavaScript -->
+    <!-- App JavaScript with Complete Bilingual Translation Dictionary -->
     <script>
         let currentLang = 'es';
         let profileData = null;
         let lastAnalysis = null;
 
-        const SAMPLE_GOLANG_JD = `Senior Golang Backend Engineer
-We are looking for a passionate Senior Backend Engineer with Golang expertise.
+        const SAMPLE_JDS = {
+            es: `Senior Golang Backend Engineer
+Buscamos un Ingeniero Backend apasionado con experiencia sólida en Golang para nuestro equipo de ingeniería.
+Requisitos:
+- 3+ años de experiencia construyendo microservicios y APIs RESTful de alto rendimiento en Golang.
+- Dominio de bases de datos relacionales (PostgreSQL, MySQL) y optimización de consultas SQL.
+- Experiencia con plataformas cloud (AWS), contenedores Docker y despliegues CI/CD.
+- Experiencia en soporte a producción, guardias On-Call y cumplimiento estricto de SLAs.
+- Deseable: Conocimiento en Kubernetes (K8s) o sistemas de mensajería asíncrona como Kafka.`,
+            en: `Senior Golang Backend Engineer
+We are seeking an experienced Backend Engineer with strong Golang expertise to join our engineering team.
 Requirements:
-- 3+ years designing and building microservices and high-throughput REST APIs in Golang.
-- Experience with relational databases like PostgreSQL and MySQL.
-- Solid background in cloud infrastructure (AWS) and containerization with Docker.
-- Experience handling production support, On-Call rotations, and strict SLAs.
-- Familiarity with AI developer productivity tools (Cursor, Claude) and clean architecture.
-- Nice to have: Kubernetes or Kafka messaging.`;
+- 3+ years building high-throughput microservices and RESTful APIs in Golang.
+- Deep familiarity with relational databases (PostgreSQL, MySQL) and SQL query optimization.
+- Solid background in cloud architectures (AWS), Docker containerization, and CI/CD pipelines.
+- Experience managing production incidents, On-Call support rotations, and SLA compliance.
+- Nice to have: Knowledge of Kubernetes (K8s) or message streaming (Kafka / RabbitMQ).`
+        };
+
+        const I18N = {
+            es: {
+                subtitle: "Rosmar Mendoza • Backend Engineer (Golang • Python)",
+                tab_match: "Evaluador de Vacantes",
+                tab_pitch: "Materiales de Postulación",
+                tab_star: "Simulador STAR (Entrevistas)",
+                tab_cv: "Perfil & CV Base",
+                input_title: "Pegar Oferta de Empleo (Job Description)",
+                btn_sample: "Cargar ejemplo Golang / MercadoLibre",
+                input_placeholder: "Pega aquí los requisitos, stack tecnológico y responsabilidades de la oferta...",
+                btn_analyze: "Analizar Compatibilidad con Rous",
+                placeholder_title: "Ninguna vacante analizada aún",
+                placeholder_sub: "Pega una descripción de empleo a la izquierda y presiona 'Analizar Compatibilidad' para ver el score y recomendaciones.",
+                score_title: "Score de Compatibilidad",
+                skills_matched: "Habilidades Coincidentes Identificadas:",
+                gaps_title: "Estrategia para Requisitos Adicionales (Mitigación):",
+                highlights_title: "Puntos Clave para tu Postulación:",
+                li_title: "💬 Mensaje Directo para Reclutador (LinkedIn)",
+                li_sub: "Mensaje conciso, cordial y de alto impacto para enviar junto a la solicitud de conexión.",
+                cl_title: "📝 Carta de Presentación (Cover Letter ATS)",
+                cl_sub: "Redactada con énfasis en escalabilidad, experiencia en MercadoLibre y metodologías modernas.",
+                copy_btn: "Copiar",
+                copied_alert: "¡Copiado al portapapeles!",
+                star_header: "🎙️ Respuestas Estructuradas en Formato STAR",
+                star_sub: "Estructura: <strong>Situación</strong> &rarr; <strong>Tarea</strong> &rarr; <strong>Acción</strong> &rarr; <strong>Resultado</strong>, extraídas de la trayectoria técnica de Rosmar.",
+                star_case: "Caso",
+                star_situation: "📍 Situación:",
+                star_task: "🎯 Tarea:",
+                star_action: "⚡ Acción:",
+                star_result: "🏆 Resultado:",
+                cv_exp_title: "💼 Trayectoria Laboral",
+                cv_skills_title: "🛠️ Stack Tecnológico",
+                cv_edu_title: "🎓 Educación & Certificaciones",
+                cv_lang_title: "🌐 Idiomas"
+            },
+            en: {
+                subtitle: "Rosmar Mendoza • Backend Engineer (Golang • Python)",
+                tab_match: "Job Fit Evaluator",
+                tab_pitch: "Application Materials",
+                tab_star: "STAR Interview Prep",
+                tab_cv: "Profile & CV",
+                input_title: "Paste Job Description",
+                btn_sample: "Load Golang / Microservices Sample",
+                input_placeholder: "Paste job requirements, tech stack, and responsibilities here...",
+                btn_analyze: "Analyze Job Fit with Rous",
+                placeholder_title: "No job analyzed yet",
+                placeholder_sub: "Paste a job description on the left and click 'Analyze Job Fit' to see your score and recommendations.",
+                score_title: "Compatibility Match Score",
+                skills_matched: "Matched Technical Skills:",
+                gaps_title: "Mitigation Strategy for Additional Requirements:",
+                highlights_title: "Key Strategic Highlights for Your Application:",
+                li_title: "💬 Direct Recruiter Pitch (LinkedIn)",
+                li_sub: "Concise, high-impact message to accompany your connection request.",
+                cl_title: "📝 ATS-Optimized Cover Letter",
+                cl_sub: "Tailored with focus on scalability, MercadoLibre experience, and engineering excellence.",
+                copy_btn: "Copy",
+                copied_alert: "Copied to clipboard!",
+                star_header: "🎙️ STAR Method Interview Responses",
+                star_sub: "Structure: <strong>Situation</strong> &rarr; <strong>Task</strong> &rarr; <strong>Action</strong> &rarr; <strong>Result</strong>, drawn from Rosmar's engineering track record.",
+                star_case: "Case",
+                star_situation: "📍 Situation:",
+                star_task: "🎯 Task:",
+                star_action: "⚡ Action:",
+                star_result: "🏆 Result:",
+                cv_exp_title: "💼 Professional Experience",
+                cv_skills_title: "🛠️ Technical Stack",
+                cv_edu_title: "🎓 Education & Certifications",
+                cv_lang_title: "🌐 Languages"
+            }
+        };
 
         async function init() {
+            changeLang('es', true);
+        }
+
+        async function changeLang(lang, isInitial = false) {
+            currentLang = lang;
+
+            // Update Language Toggle Buttons Style
+            const btnEs = document.getElementById('btn-lang-es');
+            const btnEn = document.getElementById('btn-lang-en');
+            if (lang === 'es') {
+                btnEs.className = "text-xs font-bold px-2.5 py-1 rounded-lg transition bg-white text-indigo-700 shadow-sm";
+                btnEn.className = "text-xs font-medium px-2.5 py-1 rounded-lg transition text-slate-600 hover:text-slate-900";
+            } else {
+                btnEn.className = "text-xs font-bold px-2.5 py-1 rounded-lg transition bg-white text-indigo-700 shadow-sm";
+                btnEs.className = "text-xs font-medium px-2.5 py-1 rounded-lg transition text-slate-600 hover:text-slate-900";
+            }
+
+            // Apply all UI translations
+            const t = I18N[lang];
+            document.getElementById('ui-subtitle').innerHTML = t.subtitle;
+            document.getElementById('lbl-tab-match').innerText = t.tab_match;
+            document.getElementById('lbl-tab-pitch').innerText = t.tab_pitch;
+            document.getElementById('lbl-tab-star').innerText = t.tab_star;
+            document.getElementById('lbl-tab-cv').innerText = t.tab_cv;
+            document.getElementById('lbl-input-title').innerText = t.input_title;
+            document.getElementById('btn-load-sample').innerText = t.btn_sample;
+            document.getElementById('jdInput').placeholder = t.input_placeholder;
+            document.getElementById('lbl-btn-analyze').innerText = t.btn_analyze;
+            document.getElementById('lbl-placeholder-title').innerText = t.placeholder_title;
+            document.getElementById('lbl-placeholder-sub').innerText = t.placeholder_sub;
+            document.getElementById('lbl-score-title').innerText = t.score_title;
+            document.getElementById('lbl-skills-matched').innerText = t.skills_matched;
+            document.getElementById('lbl-gaps-title').innerText = t.gaps_title;
+            document.getElementById('lbl-highlights-title').innerText = t.highlights_title;
+            document.getElementById('lbl-li-title').innerText = t.li_title;
+            document.getElementById('lbl-li-sub').innerText = t.li_sub;
+            document.getElementById('lbl-cl-title').innerText = t.cl_title;
+            document.getElementById('lbl-cl-sub').innerText = t.cl_sub;
+            document.querySelectorAll('.lbl-copy-btn').forEach(el => el.innerText = t.copy_btn);
+            document.getElementById('lbl-star-header').innerText = t.star_header;
+            document.getElementById('lbl-star-sub').innerHTML = t.star_sub;
+            document.getElementById('lbl-cv-exp-title').innerText = t.cv_exp_title;
+            document.getElementById('lbl-cv-skills-title').innerText = t.cv_skills_title;
+            document.getElementById('lbl-cv-edu-title').innerText = t.cv_edu_title;
+            document.getElementById('lbl-cv-lang-title').innerText = t.cv_lang_title;
+
+            // If textarea has sample or is empty, adapt to the new language's sample
+            const currentJdVal = document.getElementById('jdInput').value.trim();
+            if (!currentJdVal || currentJdVal === SAMPLE_JDS.es.trim() || currentJdVal === SAMPLE_JDS.en.trim()) {
+                document.getElementById('jdInput').value = SAMPLE_JDS[lang];
+            }
+
+            // Fetch profile data in selected language and render CV
             await fetchProfile();
             renderProfile();
-            // Preload default STAR scenarios
-            runAnalysis(true);
+
+            // Run analysis with new language
+            await runAnalysis(true);
         }
 
         async function fetchProfile() {
@@ -292,16 +433,6 @@ Requirements:
             } catch (e) {
                 console.error("Error fetching profile", e);
             }
-        }
-
-        function toggleLang() {
-            currentLang = document.getElementById('langSelect').value;
-            fetchProfile().then(() => {
-                renderProfile();
-                if (document.getElementById('jdInput').value.trim()) {
-                    runAnalysis();
-                }
-            });
         }
 
         function switchTab(tabId) {
@@ -318,16 +449,16 @@ Requirements:
         }
 
         function loadSampleJD() {
-            document.getElementById('jdInput').value = SAMPLE_GOLANG_JD;
+            document.getElementById('jdInput').value = SAMPLE_JDS[currentLang];
             runAnalysis();
         }
 
         async function runAnalysis(silent = false) {
             let jd = document.getElementById('jdInput').value.trim();
             if (!jd) {
-                if (silent) jd = SAMPLE_GOLANG_JD;
+                if (silent) jd = SAMPLE_JDS[currentLang];
                 else {
-                    alert("Por favor ingresa o pega el texto de la vacante.");
+                    alert(currentLang === 'es' ? "Por favor ingresa o pega el texto de la vacante." : "Please paste a job description first.");
                     return;
                 }
             }
@@ -383,7 +514,7 @@ Requirements:
                     gapsDiv.appendChild(p);
                 });
             } else {
-                gapsDiv.innerHTML = '<p class="text-xs text-slate-500 italic">No se detectaron brechas tecnológicas críticas frente al stack evaluado.</p>';
+                gapsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">${currentLang === 'es' ? 'No se detectaron brechas tecnológicas críticas frente al stack evaluado.' : 'No critical technical gaps identified against core stack.'}</p>`;
             }
 
             // Highlights
@@ -406,25 +537,27 @@ Requirements:
         function renderStar(scenarios) {
             const container = document.getElementById('starContainer');
             container.innerHTML = '';
+            const t = I18N[currentLang];
+            
             scenarios.forEach((s, idx) => {
                 const card = document.createElement('div');
                 card.className = 'bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between';
                 card.innerHTML = `
                     <div>
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700">Caso ${idx + 1}</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700">${t.star_case} ${idx + 1}</span>
                             <span class="text-xs font-semibold text-slate-500">${s.topic}</span>
                         </div>
                         <h4 class="text-sm font-bold text-slate-900 mb-4">"${s.question}"</h4>
                         
                         <div class="space-y-3 text-xs text-slate-600 mb-4">
-                            <div><strong class="text-slate-800">📍 Situación:</strong> ${s.situation}</div>
-                            <div><strong class="text-slate-800">🎯 Tarea:</strong> ${s.task}</div>
-                            <div><strong class="text-slate-800">⚡ Acción:</strong> ${s.action}</div>
+                            <div><strong class="text-slate-800">${t.star_situation}</strong> ${s.situation}</div>
+                            <div><strong class="text-slate-800">${t.star_task}</strong> ${s.task}</div>
+                            <div><strong class="text-slate-800">${t.star_action}</strong> ${s.action}</div>
                         </div>
                     </div>
                     <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-medium">
-                        <strong>🏆 Resultado:</strong> ${s.result}
+                        <strong>${t.star_result}</strong> ${s.result}
                     </div>
                 `;
                 container.appendChild(card);
@@ -491,7 +624,7 @@ Requirements:
             const textarea = document.getElementById(elementId);
             textarea.select();
             document.execCommand('copy');
-            alert('¡Copiado al portapapeles!');
+            alert(I18N[currentLang].copied_alert);
         }
 
         window.onload = init;
